@@ -11,7 +11,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
-
+console.log("loading state",loading);
   useEffect(() => {
     async function loadMovies() {
       try {
