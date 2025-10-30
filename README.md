@@ -25,8 +25,3 @@ A small React + TypeScript + Tailwind app that shows TMDB movies and supports au
 - `worlder_users` — array of saved users
 - `worlder_session` — currently signed-in user
 - `worlder_favs` — array of favourite movie IDs
-
-## Notes
-
-- This is a demo. Do NOT use the simplistic password handling in production.
-- Trailer playback uses YouTube embed if TMDB returns a trailer video with site `YouTube`.
