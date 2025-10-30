@@ -1,6 +1,6 @@
 # Worlder
 
-A small React + TypeScript + Tailwind demo app that shows TMDB movies and supports local authentication (email + fake social providers saved to localStorage).
+A small React + TypeScript + Tailwind app that shows TMDB movies and supports authentication.
 
 ## Features implemented
 
