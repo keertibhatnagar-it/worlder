@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
-import { addUser, saveSession, findUserByEmail } from '../lib/auth'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebook, FaApple } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import { auth } from '../lib/firebase'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  OAuthProvider
+} from 'firebase/auth'
 
 export default function RegisterLogin() {
   const nav = useNavigate()
@@ -14,35 +22,65 @@ export default function RegisterLogin() {
   const [password, setPassword] = useState('')
   const [err, setErr] = useState<string | null>(null)
 
-  async function socialLogin(provider: 'google' | 'facebook' | 'apple') {
-    const id = uuid()
-    const user = { id, name: `${provider} user`, email: `${provider}@local.test`, provider }
-    addUser(user as any)
-    saveSession(user as any)
-    nav('/')
+  // -------- Social Login --------
+  async function socialLogin(providerType: 'google' | 'facebook' | 'apple') {
+    try {
+      let provider
+      if (providerType === 'google') provider = new GoogleAuthProvider()
+      if (providerType === 'facebook') provider = new FacebookAuthProvider()
+      if (providerType === 'apple') provider = new OAuthProvider('apple.com')
+
+      await signInWithPopup(auth, provider!)
+      nav('/')
+    } catch (error: any) {
+      console.error(error)
+      setErr(error.message || 'Social login failed')
+    }
   }
 
-  function handleRegister(e: React.FormEvent) {
+  // -------- Register --------
+  async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
-    if (!email || !password || !name) { setErr('Please fill all fields'); return }
-    if (findUserByEmail(email)) { setErr('Email already registered'); return }
-    const user = { id: uuid(), name, email, provider: 'email', passwordHash: btoa(password) }
-    addUser(user as any)
-    saveSession(user as any)
-    nav('/')
+    setErr(null)
+    if (!email || !password || !name) {
+      setErr('Please fill all fields')
+      return
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      await updateProfile(userCredential.user, { displayName: name })
+      nav('/')
+    } catch (error: any) {
+      console.error(error)
+      if (error.code === 'auth/email-already-in-use') setErr('Email already registered')
+      else if (error.code === 'auth/weak-password') setErr('Password is too weak')
+      else setErr(error.message)
+    }
   }
 
-  function handleLogin(e: React.FormEvent) {
+  // -------- Login --------
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    const u = findUserByEmail(email)
-    if (!u) { setErr('User not found'); return }
-    if (u.passwordHash !== btoa(password)) { setErr('Incorrect password'); return }
-    saveSession(u)
-    nav('/')
+    setErr(null)
+    if (!email || !password) {
+      setErr('Please fill all fields')
+      return
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      nav('/')
+    } catch (error: any) {
+      console.error(error)
+      if (error.code === 'auth/user-not-found') setErr('User not found')
+      else if (error.code === 'auth/wrong-password') setErr('Incorrect password')
+      else setErr(error.message)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-linear-to-b from-gray-950 via-gray-900 to-black flex items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,7 +88,7 @@ export default function RegisterLogin() {
         className="w-full max-w-4xl bg-gray-900/70 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
       >
         {/* Left: Social login panel */}
-        <div className="p-8 md:p-10 bg-gradient-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
+        <div className="p-8 md:p-10 bg-linear-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
           <h2 className="text-3xl font-bold mb-6 text-white">
             {mode === 'register' ? 'Create your account' : 'Welcome back'}
           </h2>
@@ -124,6 +162,7 @@ export default function RegisterLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              type="email"
               className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             <input
@@ -138,7 +177,7 @@ export default function RegisterLogin() {
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 rounded-md shadow-lg mt-2"
+              className="bg-blue-600 cursor-pointer hover:bg-blue-700 transition text-white font-semibold py-2 rounded-md shadow-lg mt-2"
             >
               {mode === 'register' ? 'Create account' : 'Sign in'}
             </button>
