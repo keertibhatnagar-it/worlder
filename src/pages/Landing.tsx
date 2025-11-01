@@ -45,7 +45,7 @@ export default function Landing() {
           transition={{ delay: 0.6, duration: 1 }}
           className="mt-10 flex gap-4"
         >
-          <button onClick={()=>nav("/auth")} className="px-16 py-3 bg-red-600 hover:bg-red-700 rounded-full font-semibold shadow-lg transition">
+          <button onClick={()=>nav("/auth")} className="cursor-pointer px-16 py-3 bg-red-600 hover:bg-red-700 rounded-full font-semibold shadow-lg transition">
             Get Started
           </button>
         </motion.div>

@@ -7,8 +7,9 @@ passwordHash?: string // simple storing — demo only
 }
 
 
-const USERS_KEY = 'worlder_users'
-const SESSION_KEY = 'worlder_session'
+export const USERS_KEY = 'worlder_users'
+const SESSION_KEY = 'worlder_users'
+// const SESSION_KEY = 'worlder_session'
 
 
 export function readUsers(): User[] {

@@ -12,7 +12,7 @@ export default function Header() {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 text-white text-2xl font-extrabold tracking-tight"
+          className="cursor-pointer flex items-center gap-2 text-white text-2xl font-extrabold tracking-tight"
         >
           <FaFilm className="text-red-500 w-6 h-6" />
           <span>Worlder</span>
@@ -22,13 +22,13 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           <Link
             to="/explore"
-            className="text-gray-300 hover:text-white flex items-center gap-1 transition"
+            className="cursor-pointer text-gray-300 hover:text-white flex items-center gap-1 transition"
           >
             <FaCompass className="w-4 h-4" /> Explore
           </Link>
           <Link
             to="/favorites"
-            className="text-gray-300 hover:text-white flex items-center gap-1 transition"
+            className="cursor-pointer text-gray-300 hover:text-white flex items-center gap-1 transition"
           >
             <FaStar className="w-4 h-4" /> Favourites
           </Link>
@@ -46,7 +46,7 @@ export default function Header() {
                   clearSession();
                   nav("/");
                 }}
-                className="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-full shadow-md transition"
+                className="cursor-pointer px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-full shadow-md transition"
               >
                 Sign Out
               </button>
@@ -54,7 +54,7 @@ export default function Header() {
           ) : (
             <Link
               to="/auth"
-              className="px-5 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-full shadow-md transition"
+              className="cursor-pointer px-5 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-full shadow-md transition"
             >
               Sign In
             </Link>
