@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { FcGoogle } from 'react-icons/fc'
-import { FaFacebook, FaApple } from 'react-icons/fa'
-import { auth } from '../lib/firebase'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaApple } from "react-icons/fa";
+import { auth } from "../lib/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -11,86 +11,100 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
-  OAuthProvider
-} from 'firebase/auth'
-import { writeUsers } from '../lib/auth'
+  OAuthProvider,
+} from "firebase/auth";
+import { writeUsers } from "../lib/auth";
 
 export default function RegisterLogin() {
-  const nav = useNavigate()
-  const [mode, setMode] = useState<'login' | 'register'>('register')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [err, setErr] = useState<string | null>(null)
+  const nav = useNavigate();
+  const [mode, setMode] = useState<"login" | "register">("register");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState<string | null>(null);
 
   // -------- Social Login --------
- async function socialLogin(providerType: 'google' | 'facebook' | 'apple') {
-  try {
-    let provider
-    if (providerType === 'google') provider = new GoogleAuthProvider()
-    if (providerType === 'facebook') provider = new FacebookAuthProvider()
-    if (providerType === 'apple') provider = new OAuthProvider('apple.com')
+  async function socialLogin(providerType: "google" | "facebook" | "apple") {
+    try {
+      let provider;
+      if (providerType === "google") provider = new GoogleAuthProvider();
+      if (providerType === "facebook") provider = new FacebookAuthProvider();
+      // if (providerType === 'apple') provider = new OAuthProvider('apple.com')
+      if (providerType === "apple") {
+        alert(
+          "Apple login requires an Apple Developer account.\nThis button is a demo placeholder for now."
+        );
+        return;
+      }
 
-    const result = await signInWithPopup(auth, provider!)
-    const user = result.user
+      const result = await signInWithPopup(auth, provider!);
+      const user = result.user;
 
-    // Store user info in localStorage
-    const userData = [{
-      id: user.uid||"",
-      name: user.displayName||"",
-      email: user.email||"",
-      photoURL: user.photoURL||"",
-      provider: providerType
-  }]
+      // Store user info in localStorage
+      const userData = [
+        {
+          id: user.uid || "",
+          name: user.displayName || "",
+          email: user.email || "",
+          photoURL: user.photoURL || "",
+          provider: providerType,
+        },
+      ];
 
-    writeUsers(userData)
+      writeUsers(userData);
 
-    nav('/')
-  } catch (error: any) {
-    console.error(error)
-    setErr(error.message || 'Social login failed')
+      nav("/");
+    } catch (error: any) {
+      console.error(error);
+      setErr(error.message || "Social login failed");
+    }
   }
-}
-
 
   // -------- Register --------
   async function handleRegister(e: React.FormEvent) {
-    e.preventDefault()
-    setErr(null)
+    e.preventDefault();
+    setErr(null);
     if (!email || !password || !name) {
-      setErr('Please fill all fields')
-      return
+      setErr("Please fill all fields");
+      return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      await updateProfile(userCredential.user, { displayName: name })
-      nav('/')
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(userCredential.user, { displayName: name });
+      nav("/");
     } catch (error: any) {
-      console.error(error)
-      if (error.code === 'auth/email-already-in-use') setErr('Email already registered')
-      else if (error.code === 'auth/weak-password') setErr('Password is too weak')
-      else setErr(error.message)
+      console.error(error);
+      if (error.code === "auth/email-already-in-use")
+        setErr("Email already registered");
+      else if (error.code === "auth/weak-password")
+        setErr("Password is too weak");
+      else setErr(error.message);
     }
   }
 
   // -------- Login --------
   async function handleLogin(e: React.FormEvent) {
-    e.preventDefault()
-    setErr(null)
+    e.preventDefault();
+    setErr(null);
     if (!email || !password) {
-      setErr('Please fill all fields')
-      return
+      setErr("Please fill all fields");
+      return;
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      nav('/')
+      await signInWithEmailAndPassword(auth, email, password);
+      nav("/");
     } catch (error: any) {
-      console.error(error)
-      if (error.code === 'auth/user-not-found') setErr('User not found')
-      else if (error.code === 'auth/wrong-password') setErr('Incorrect password')
-      else setErr(error.message)
+      console.error(error);
+      if (error.code === "auth/user-not-found") setErr("User not found");
+      else if (error.code === "auth/wrong-password")
+        setErr("Incorrect password");
+      else setErr(error.message);
     }
   }
 
@@ -105,7 +119,7 @@ export default function RegisterLogin() {
         {/* Left: Social login panel */}
         <div className="p-8 md:p-10 bg-linear-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
           <h2 className="text-3xl font-bold mb-6 text-white">
-            {mode === 'register' ? 'Create your account' : 'Welcome back'}
+            {mode === "register" ? "Create your account" : "Welcome back"}
           </h2>
           <p className="text-gray-400 mb-8 text-sm">
             Continue with your favorite platform or sign in using your email.
@@ -113,21 +127,21 @@ export default function RegisterLogin() {
 
           <div className="flex flex-col gap-3">
             <button
-              onClick={() => socialLogin('google')}
+              onClick={() => socialLogin("google")}
               className="flex items-center justify-center gap-3 bg-white/90 hover:bg-white text-gray-900 font-medium py-2 rounded-lg transition"
             >
               <FcGoogle size={22} /> Continue with Google
             </button>
 
             <button
-              onClick={() => socialLogin('facebook')}
+              onClick={() => socialLogin("facebook")}
               className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
             >
               <FaFacebook size={20} /> Continue with Facebook
             </button>
 
             <button
-              onClick={() => socialLogin('apple')}
+              onClick={() => socialLogin("apple")}
               className="flex items-center justify-center gap-3 bg-black hover:bg-gray-900 text-white font-medium py-2 rounded-lg transition border border-gray-700"
             >
               <FaApple size={20} /> Continue with Apple
@@ -141,20 +155,22 @@ export default function RegisterLogin() {
             <div className="text-sm text-gray-400">Use email instead</div>
             <div>
               <button
-                className={`px-3 py-1 rounded-md transition ${mode === 'register'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-400 hover:text-white'
-                  }`}
-                onClick={() => setMode('register')}
+                className={`px-3 py-1 rounded-md transition ${
+                  mode === "register"
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-400 hover:text-white"
+                }`}
+                onClick={() => setMode("register")}
               >
                 Register
               </button>
               <button
-                className={`px-3 py-1 rounded-md transition ${mode === 'login'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-400 hover:text-white'
-                  }`}
-                onClick={() => setMode('login')}
+                className={`px-3 py-1 rounded-md transition ${
+                  mode === "login"
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-400 hover:text-white"
+                }`}
+                onClick={() => setMode("login")}
               >
                 Login
               </button>
@@ -162,10 +178,10 @@ export default function RegisterLogin() {
           </div>
 
           <form
-            onSubmit={mode === 'register' ? handleRegister : handleLogin}
+            onSubmit={mode === "register" ? handleRegister : handleLogin}
             className="flex flex-col gap-4"
           >
-            {mode === 'register' && (
+            {mode === "register" && (
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -194,11 +210,11 @@ export default function RegisterLogin() {
               type="submit"
               className="bg-blue-600 cursor-pointer hover:bg-blue-700 transition text-white font-semibold py-2 rounded-md shadow-lg mt-2"
             >
-              {mode === 'register' ? 'Create account' : 'Sign in'}
+              {mode === "register" ? "Create account" : "Sign in"}
             </button>
           </form>
         </div>
       </motion.div>
     </div>
-  )
+  );
 }

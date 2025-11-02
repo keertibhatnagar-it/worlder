@@ -5,7 +5,7 @@ export default function Landing() {
   const nav = useNavigate();
 
   return (
-    <div className="relative min-h-screen text-white overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-950">
+    <div className="relative min-h-screen text-white overflow-hidden bg-linear-to-b from-gray-900 via-black to-gray-950">
       {/* Background Image / Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-40"
@@ -14,7 +14,7 @@ export default function Landing() {
             "url('https://image.tmdb.org/t/p/original/8YFL5QQVPy3AgrEQxNYVSgiPEbe.jpg')",
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-black/90"></div>
 
       {/* Hero Content - Centered */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center h-screen px-6">
