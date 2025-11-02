@@ -13,6 +13,7 @@ import {
   FacebookAuthProvider,
   OAuthProvider
 } from 'firebase/auth'
+import { writeUsers } from '../lib/auth'
 
 export default function RegisterLogin() {
   const nav = useNavigate()
@@ -23,20 +24,34 @@ export default function RegisterLogin() {
   const [err, setErr] = useState<string | null>(null)
 
   // -------- Social Login --------
-  async function socialLogin(providerType: 'google' | 'facebook' | 'apple') {
-    try {
-      let provider
-      if (providerType === 'google') provider = new GoogleAuthProvider()
-      if (providerType === 'facebook') provider = new FacebookAuthProvider()
-      if (providerType === 'apple') provider = new OAuthProvider('apple.com')
+ async function socialLogin(providerType: 'google' | 'facebook' | 'apple') {
+  try {
+    let provider
+    if (providerType === 'google') provider = new GoogleAuthProvider()
+    if (providerType === 'facebook') provider = new FacebookAuthProvider()
+    if (providerType === 'apple') provider = new OAuthProvider('apple.com')
 
-      await signInWithPopup(auth, provider!)
-      nav('/')
-    } catch (error: any) {
-      console.error(error)
-      setErr(error.message || 'Social login failed')
-    }
+    const result = await signInWithPopup(auth, provider!)
+    const user = result.user
+
+    // Store user info in localStorage
+    const userData = [{
+      id: user.uid||"",
+      name: user.displayName||"",
+      email: user.email||"",
+      photoURL: user.photoURL||"",
+      provider: providerType
+  }]
+
+    writeUsers(userData)
+
+    nav('/')
+  } catch (error: any) {
+    console.error(error)
+    setErr(error.message || 'Social login failed')
   }
+}
+
 
   // -------- Register --------
   async function handleRegister(e: React.FormEvent) {

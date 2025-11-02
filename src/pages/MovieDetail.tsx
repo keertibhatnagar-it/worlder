@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { tmdb } from "../services/tmdb";
 import { motion } from "framer-motion";
 import { FaStar, FaClock, FaHeart, FaRegHeart } from "react-icons/fa";
+import Slider from "react-slick";
 
 export default function MovieDetail() {
   const { id } = useParams();
@@ -42,9 +43,23 @@ export default function MovieDetail() {
   const trailer = movie.videos?.results?.find(
     (v: any) => v.type === "Trailer" && v.site === "YouTube"
   );
-
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 2,
+    swipeToSlide: true,
+    arrows: true,
+    responsive: [
+      { breakpoint: 1280, settings: { slidesToShow: 4 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1 } },
+    ],
+  };
   return (
-    <div className="relative min-h-screen text-white bg-gradient-to-b from-gray-950 via-black to-gray-900">
+    <div className="relative min-h-screen text-white bg-linear-to-b from-gray-950 via-black to-gray-900">
       {/* Background Poster */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 blur-sm"
@@ -52,7 +67,7 @@ export default function MovieDetail() {
           backgroundImage: `url(${tmdb.image(movie.backdrop_path || movie.poster_path, "w1280")})`,
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/70 to-transparent"></div>
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-8">
@@ -114,39 +129,39 @@ export default function MovieDetail() {
           <p className="text-gray-300 leading-relaxed mb-8">{movie.overview}</p>
 
           {/* Cast Section */}
-          <h3 className="text-2xl font-semibold mb-3">Cast</h3>
-          <div className="flex gap-4 overflow-x-auto pb-2">
-            {cast.map((c: any) => (
-              <div
-                key={c.cast_id}
-                className="text-center min-w-[120px] bg-gray-800/40 rounded-xl p-2 hover:bg-gray-700/40 transition"
-              >
-                <img
-                  src={tmdb.image(c.profile_path, "w185")}
-                  alt={c.name}
-                  className="h-36 w-full object-cover rounded-lg mb-2"
-                />
-                <div className="text-sm font-medium">{c.name}</div>
-                <div className="text-xs text-gray-400">as {c.character}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Trailer Section */}
-          {trailer && (
-            <div className="mt-10">
-              <h3 className="text-2xl font-semibold mb-3">Watch Trailer</h3>
-              <div className="aspect-video rounded-xl overflow-hidden shadow-2xl border border-gray-700">
-                <iframe
-                  title="trailer"
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${trailer.key}`}
-                  allowFullScreen
-                />
-              </div>
+          {/* Cast Section */}
+      <h3 className="text-2xl font-semibold mb-3">Cast</h3>
+      <Slider {...settings}>
+        {cast.map((c: any) => (
+          <div key={c.cast_id} className="px-2">
+            <div className="text-center bg-gray-800/40 rounded-xl p-3 hover:bg-gray-700/40 transition">
+              <img
+                src={tmdb.image(c.profile_path, "w185")}
+                alt={c.name}
+                className="h-40 w-full object-cover rounded-lg mb-2"
+              />
+              <div className="text-sm font-medium">{c.name}</div>
+              <div className="text-xs text-gray-400">as {c.character}</div>
             </div>
-          )}
+          </div>
+        ))}
+      </Slider>
+
+           {/* Trailer Section */}
+      {trailer && (
+        <div className="mt-10">
+          <h3 className="text-2xl font-semibold mb-3">Watch Trailer</h3>
+          <div className="aspect-video rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+            <iframe
+              title="trailer"
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${trailer.key}`}
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
         </motion.div>
       </div>
     </div>

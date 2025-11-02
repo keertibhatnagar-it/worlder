@@ -3,6 +3,7 @@ import { tmdb } from '../services/tmdb'
 
 
 export default function MovieCard({ movie }: { movie: any }) {
+
 return (
 <div className="bg-white rounded-md shadow-sm overflow-hidden">
 <Link to={`/movie/${movie.id}`}>

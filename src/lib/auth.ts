@@ -3,7 +3,8 @@ id: string
 name: string
 email?: string
 provider: 'email' | 'google' | 'facebook' | 'apple'
-passwordHash?: string // simple storing — demo only
+photoURL?:string
+passwordHash?: string 
 }
 
 

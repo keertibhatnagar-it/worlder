@@ -34,7 +34,7 @@ export default function Favorites() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-gray-100 py-16 px-6">
+    <div className="min-h-screen bg-linear-to-b from-gray-950 via-gray-900 to-black text-gray-100 py-16 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
@@ -76,7 +76,7 @@ export default function Favorites() {
                 >
                   {/* Card */}
                   <div className="rounded-xl overflow-hidden shadow-lg shadow-black/40 hover:shadow-red-600/20 hover:-translate-y-1 transition duration-300">
-                    <MovieCard movie={m} />
+                    <MovieCard movie={m.data} />
                   </div>
 
                   {/* Remove button */}

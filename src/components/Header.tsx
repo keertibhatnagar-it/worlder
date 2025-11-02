@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { readSession, clearSession } from "../lib/auth";
+import { readSession, clearSession} from "../lib/auth";
 import { FaFilm, FaStar, FaCompass } from "react-icons/fa";
 
 export default function Header() {
-  const user = readSession();
+  const user:any = readSession();
   const nav = useNavigate();
 
   return (
@@ -39,7 +39,7 @@ export default function Header() {
           {user ? (
             <div className="flex items-center gap-3">
               <span className="text-sm text-gray-300 hidden sm:inline">
-                Hi, {user.name || "User"}
+                Hi, {user[0].name || "User"}
               </span>
               <button
                 onClick={() => {
