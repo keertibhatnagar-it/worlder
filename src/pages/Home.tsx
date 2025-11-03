@@ -60,12 +60,15 @@ export default function Home() {
     dots: false,
     infinite: false,
     speed: 500,
+    arrows: true, // Default slick arrows
     slidesToShow: 5,
-    slidesToScroll: 4,
+    slidesToScroll: 2,
+    swipeToSlide: true,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+      { breakpoint: 1280, settings: { slidesToShow: 4 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1.3 } },
     ],
   };
   useEffect(() => {
@@ -159,7 +162,7 @@ export default function Home() {
             </div>
           </section>
         ) : (
-          <>
+          <div className="sm:px-0 px-4">
             <MovieSlider
               title={t("home.popular")}
               movies={popular}
@@ -180,7 +183,7 @@ export default function Home() {
               movies={top}
               settings={sliderSettings}
             />
-          </>
+          </div>
         )}
       </div>
     </div>
