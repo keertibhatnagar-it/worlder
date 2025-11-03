@@ -5,11 +5,13 @@ A modern React + TypeScript application for discovering and exploring movies usi
 ## 🎬 Features
 
 - **User Authentication**
+
   - Email/password registration (password stored as base64 hash for demo purposes)
   - Social login options (Google, Facebook, Apple) — UI-only implementation
   - Session management via localStorage
 
 - **Movie Discovery**
+
   - Browse movies by categories: Popular, Now Playing, Upcoming, Top Rated
   - Search movies by keyword
   - View detailed movie information including:
@@ -19,11 +21,13 @@ A modern React + TypeScript application for discovering and exploring movies usi
     - Movie trailers (YouTube via TMDB video data)
 
 - **Personalization**
+
   - Save favorite movies to localStorage
   - Add/remove favorites from any movie page
   - Dedicated favorites page
 
 - **Internationalization**
+
   - Multi-language support (English, Arabic, Spanish, French)
   - RTL (Right-to-Left) support for Arabic
 
@@ -79,6 +83,7 @@ VITE_TMDB_API_KEY=your_tmdb_api_key_here
 ```
 
 **Note**: You can also add Firebase configuration variables if needed:
+
 ```env
 VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
@@ -129,11 +134,52 @@ To check for code quality issues:
 npm run lint
 ```
 
+### Running the Desktop App (Electron)
+
+Build & Run Electron App
+
+```bash
+npm run start
+```
+
+This command will:
+
+Build your React app into /dist
+
+Compile Electron TypeScript into /dist-electron
+
+Launch a desktop window running the app
+
+### File Structure for Electron
+
+```
+electron/
+├── main.ts # Electron main process (entry)
+└── tsconfig.json # Electron TypeScript config
+dist/ # React production build
+dist-electron/ # Compiled Electron output
+```
+
+### Electron Features
+
+- Runs offline with local data (favorites, login)
+
+- Uses local TMDB and Firebase configurations
+
+- Same UI/UX as the web version
+
+- Built with TypeScript and CommonJS support for compatibility
+
 ## 📁 Project Structure
 
 ```
 worlder/
 ├── public/                 # Static assets
+├── electron/
+│   ├── main.ts
+│   └── tsconfig.json
+├── dist/
+├── dist-electron/
 ├── src/
 │   ├── components/         # Reusable React components
 │   │   ├── Header.tsx
@@ -199,7 +245,6 @@ The application uses the following localStorage keys:
 - Social logins (Google, Facebook, Apple) are UI-only implementations
 - TMDB API key is required for the application to function
 - The application supports multiple languages with RTL support for Arabic
-
 
 ## 📄 License
 
