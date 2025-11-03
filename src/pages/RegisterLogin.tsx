@@ -14,9 +14,11 @@ import {
   OAuthProvider,
 } from "firebase/auth";
 import { writeUsers } from "../lib/auth";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterLogin() {
   const nav = useNavigate();
+  const { t } = useTranslation();
   const [mode, setMode] = useState<"login" | "register">("register");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,9 +33,7 @@ export default function RegisterLogin() {
       if (providerType === "facebook") provider = new FacebookAuthProvider();
       // if (providerType === 'apple') provider = new OAuthProvider('apple.com')
       if (providerType === "apple") {
-        alert(
-          "Apple login requires an Apple Developer account.\nThis button is a demo placeholder for now."
-        );
+        alert(t("auth.appleLoginNotAvailable"));
         return;
       }
 
@@ -56,7 +56,7 @@ export default function RegisterLogin() {
       nav("/");
     } catch (error: any) {
       console.error(error);
-      setErr(error.message || "Social login failed");
+      setErr(error.message || t("auth.socialLoginFailed"));
     }
   }
 
@@ -65,7 +65,7 @@ export default function RegisterLogin() {
     e.preventDefault();
     setErr(null);
     if (!email || !password || !name) {
-      setErr("Please fill all fields");
+      setErr(t("auth.fillAllFields"));
       return;
     }
 
@@ -80,9 +80,9 @@ export default function RegisterLogin() {
     } catch (error: any) {
       console.error(error);
       if (error.code === "auth/email-already-in-use")
-        setErr("Email already registered");
+        setErr(t("auth.emailAlreadyRegistered"));
       else if (error.code === "auth/weak-password")
-        setErr("Password is too weak");
+        setErr(t("auth.weakPassword"));
       else setErr(error.message);
     }
   }
@@ -92,7 +92,7 @@ export default function RegisterLogin() {
     e.preventDefault();
     setErr(null);
     if (!email || !password) {
-      setErr("Please fill all fields");
+      setErr(t("auth.fillAllFields"));
       return;
     }
 
@@ -101,9 +101,9 @@ export default function RegisterLogin() {
       nav("/");
     } catch (error: any) {
       console.error(error);
-      if (error.code === "auth/user-not-found") setErr("User not found");
+      if (error.code === "auth/user-not-found") setErr(t("auth.userNotFound"));
       else if (error.code === "auth/wrong-password")
-        setErr("Incorrect password");
+        setErr(t("auth.wrongPassword"));
       else setErr(error.message);
     }
   }
@@ -119,10 +119,10 @@ export default function RegisterLogin() {
         {/* Left: Social login panel */}
         <div className="p-8 md:p-10 bg-linear-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
           <h2 className="text-3xl font-bold mb-6 text-white">
-            {mode === "register" ? "Create your account" : "Welcome back"}
+            {mode === "register" ? t("auth.createAccount") : t("auth.welcomeBack")}
           </h2>
           <p className="text-gray-400 mb-8 text-sm">
-            Continue with your favorite platform or sign in using your email.
+            {t("auth.continueWith")}
           </p>
 
           <div className="flex flex-col gap-3">
@@ -130,21 +130,21 @@ export default function RegisterLogin() {
               onClick={() => socialLogin("google")}
               className="flex items-center justify-center gap-3 bg-white/90 hover:bg-white text-gray-900 font-medium py-2 rounded-lg transition"
             >
-              <FcGoogle size={22} /> Continue with Google
+              <FcGoogle size={22} /> {t("auth.continueWithGoogle")}
             </button>
 
             <button
               onClick={() => socialLogin("facebook")}
               className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
             >
-              <FaFacebook size={20} /> Continue with Facebook
+              <FaFacebook size={20} /> {t("auth.continueWithFacebook")}
             </button>
 
             <button
               onClick={() => socialLogin("apple")}
               className="flex items-center justify-center gap-3 bg-black hover:bg-gray-900 text-white font-medium py-2 rounded-lg transition border border-gray-700"
             >
-              <FaApple size={20} /> Continue with Apple
+              <FaApple size={20} /> {t("auth.continueWithApple")}
             </button>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function RegisterLogin() {
         {/* Right: Email/password form */}
         <div className="p-8 md:p-10 flex flex-col justify-center text-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <div className="text-sm text-gray-400">Use email instead</div>
+            <div className="text-sm text-gray-400">{t("auth.useEmailInstead")}</div>
             <div>
               <button
                 className={`px-3 py-1 rounded-md transition ${
@@ -162,7 +162,7 @@ export default function RegisterLogin() {
                 }`}
                 onClick={() => setMode("register")}
               >
-                Register
+                {t("auth.register")}
               </button>
               <button
                 className={`px-3 py-1 rounded-md transition ${
@@ -172,7 +172,7 @@ export default function RegisterLogin() {
                 }`}
                 onClick={() => setMode("login")}
               >
-                Login
+                {t("auth.login")}
               </button>
             </div>
           </div>
@@ -185,14 +185,14 @@ export default function RegisterLogin() {
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Full name"
+                placeholder={t("auth.fullName")}
                 className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             )}
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
+              placeholder={t("auth.email")}
               type="email"
               className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
             />
@@ -200,7 +200,7 @@ export default function RegisterLogin() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder={t("auth.password")}
               className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
             />
 
@@ -210,7 +210,7 @@ export default function RegisterLogin() {
               type="submit"
               className="bg-blue-600 cursor-pointer hover:bg-blue-700 transition text-white font-semibold py-2 rounded-md shadow-lg mt-2"
             >
-              {mode === "register" ? "Create account" : "Sign in"}
+              {mode === "register" ? t("auth.createAccountBtn") : t("auth.signInBtn")}
             </button>
           </form>
         </div>

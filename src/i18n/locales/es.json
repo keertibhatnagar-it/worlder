@@ -1,0 +1,70 @@
+{
+  "landing": {
+    "title": "Descubre, Mira y Colecciona",
+    "titleHighlight": "Tus Películas Favoritas",
+    "subtitle": "Explora películas populares, mejor valoradas y próximas de todo el mundo. Crea tu lista de reproducción personal y nunca más te pierdas un momento cinematográfico.",
+    "getStarted": "Comenzar"
+  },
+  "header": {
+    "explore": "Explorar",
+    "favorites": "Favoritos",
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión",
+    "hi": "Hola"
+  },
+  "auth": {
+    "createAccount": "Crea tu cuenta",
+    "welcomeBack": "Bienvenido de nuevo",
+    "continueWith": "Continúa con tu plataforma favorita o inicia sesión con tu correo electrónico.",
+    "continueWithGoogle": "Continuar con Google",
+    "continueWithFacebook": "Continuar con Facebook",
+    "continueWithApple": "Continuar con Apple",
+    "useEmailInstead": "Usar correo electrónico en su lugar",
+    "register": "Registrarse",
+    "login": "Iniciar Sesión",
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "createAccountBtn": "Crear cuenta",
+    "signInBtn": "Iniciar sesión",
+    "fillAllFields": "Por favor completa todos los campos",
+    "emailAlreadyRegistered": "El correo ya está registrado",
+    "weakPassword": "La contraseña es demasiado débil",
+    "userNotFound": "Usuario no encontrado",
+    "wrongPassword": "Contraseña incorrecta",
+    "socialLoginFailed": "Error en el inicio de sesión social",
+    "appleLoginNotAvailable": "El inicio de sesión con Apple requiere una cuenta de Apple Developer.\nEste botón es un marcador de posición de demostración por ahora."
+  },
+  "home": {
+    "watchTrailer": "Ver Tráiler",
+    "searchMovies": "Buscar películas...",
+    "search": "Buscar",
+    "searchResults": "Resultados de Búsqueda",
+    "popular": "Popular",
+    "nowPlaying": "En Cartelera",
+    "upcoming": "Próximamente",
+    "topRated": "Mejor Valoradas",
+    "failedToFetch": "Error al obtener datos de películas. Por favor, inténtalo de nuevo más tarde.",
+    "searchFailed": "Error en la búsqueda. Por favor, verifica tu conexión."
+  },
+  "movieDetail": {
+    "loading": "Cargando detalles de la película...",
+    "addToFavorites": "Añadir a Favoritos",
+    "removeFromFavorites": "Eliminar de Favoritos",
+    "cast": "Reparto",
+    "watchTrailer": "Ver Tráiler",
+    "as": "como",
+    "min": "min"
+  },
+  "favorites": {
+    "myFavorites": "Mis Favoritos",
+    "movie": "película",
+    "movies": "películas",
+    "noFavoritesYet": "Aún no hay favoritos — ¡comienza a agregar tus mejores selecciones!",
+    "removeFromFavorites": "Eliminar de favoritos"
+  },
+  "common": {
+    "language": "Idioma"
+  }
+}
+

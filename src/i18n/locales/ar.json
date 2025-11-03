@@ -1,0 +1,70 @@
+{
+  "landing": {
+    "title": "اكتشف، شاهد وجمع",
+    "titleHighlight": "أفلامك المفضلة",
+    "subtitle": "استكشف أفلامًا رائجة ومصنفة جيدًا وقادمة من جميع أنحاء العالم. أنشئ قائمة المشاهدة الشخصية الخاصة بك ولا تفوت لحظة سينمائية مرة أخرى.",
+    "getStarted": "ابدأ"
+  },
+  "header": {
+    "explore": "استكشف",
+    "favorites": "المفضلة",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "hi": "مرحبا"
+  },
+  "auth": {
+    "createAccount": "إنشاء حسابك",
+    "welcomeBack": "مرحباً بعودتك",
+    "continueWith": "تابع مع منصتك المفضلة أو سجل الدخول باستخدام بريدك الإلكتروني.",
+    "continueWithGoogle": "المتابعة مع Google",
+    "continueWithFacebook": "المتابعة مع Facebook",
+    "continueWithApple": "المتابعة مع Apple",
+    "useEmailInstead": "استخدم البريد الإلكتروني بدلاً من ذلك",
+    "register": "التسجيل",
+    "login": "تسجيل الدخول",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "createAccountBtn": "إنشاء حساب",
+    "signInBtn": "تسجيل الدخول",
+    "fillAllFields": "الرجاء ملء جميع الحقول",
+    "emailAlreadyRegistered": "البريد الإلكتروني مسجل بالفعل",
+    "weakPassword": "كلمة المرور ضعيفة جداً",
+    "userNotFound": "المستخدم غير موجود",
+    "wrongPassword": "كلمة المرور غير صحيحة",
+    "socialLoginFailed": "فشل تسجيل الدخول الاجتماعي",
+    "appleLoginNotAvailable": "يتطلب تسجيل الدخول مع Apple حساب Apple Developer.\nهذا الزر هو عنصر نائب تجريبي في الوقت الحالي."
+  },
+  "home": {
+    "watchTrailer": "مشاهدة الإعلان",
+    "searchMovies": "البحث عن الأفلام...",
+    "search": "بحث",
+    "searchResults": "نتائج البحث",
+    "popular": "شائع",
+    "nowPlaying": "يعرض الآن",
+    "upcoming": "قريباً",
+    "topRated": "الأعلى تقييماً",
+    "failedToFetch": "فشل في جلب بيانات الأفلام. يرجى المحاولة مرة أخرى لاحقاً.",
+    "searchFailed": "فشل البحث. يرجى التحقق من الاتصال."
+  },
+  "movieDetail": {
+    "loading": "جارٍ تحميل تفاصيل الفيلم...",
+    "addToFavorites": "إضافة إلى المفضلة",
+    "removeFromFavorites": "إزالة من المفضلة",
+    "cast": "طاقم التمثيل",
+    "watchTrailer": "مشاهدة الإعلان",
+    "as": "في دور",
+    "min": "دقيقة"
+  },
+  "favorites": {
+    "myFavorites": "مفضلاتي",
+    "movie": "فيلم",
+    "movies": "أفلام",
+    "noFavoritesYet": "لا توجد مفضلات بعد — ابدأ بإضافة أفضل خياراتك!",
+    "removeFromFavorites": "إزالة من المفضلة"
+  },
+  "common": {
+    "language": "اللغة"
+  }
+}
+
