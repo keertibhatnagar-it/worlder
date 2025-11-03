@@ -9,6 +9,8 @@ export const tmdb = {
     api.get("/search/movie", { params: { query, page } }),
   getMovieDetails: (id: number) =>
     api.get(`/movie/${id}`, { params: { append_to_response: "credits,videos" } }),
+  getMovieVideos: (id: number) =>
+    api.get(`/movie/${id}/videos`),
   image: (path: string | null, size = "w342") =>
     path ? `https://image.tmdb.org/t/p/${size}${path}` : "/placeholder.png",
 };

@@ -7,14 +7,67 @@ import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const { t } = useTranslation();
- const [popular, setPopular] = useState<any[]>([]);
+  const [popular, setPopular] = useState<any[]>([]);
   const [now, setNow] = useState<any[]>([]);
   const [upcoming, setUpcoming] = useState<any[]>([]);
   const [top, setTop] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
-console.log("loading state",loading);
+  console.log("loading state", loading);
+
+  async function doSearch(e?: React.FormEvent) {
+    e?.preventDefault();
+
+    const trimmed = query.trim();
+
+    if (!trimmed) {
+      // Reset to default view
+      setSearch(null);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await tmdb.searchMovies(trimmed);
+      setSearch(res.data.results);
+    } catch (err) {
+      console.error(err);
+      toast.error(t("home.searchFailed"));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function watchTrailer(movieId: number) {
+    try {
+      const res = await tmdb.getMovieVideos(movieId);
+      const trailer = res.data.results.find(
+        (v: any) => v.type === "Trailer" && v.site === "YouTube"
+      );
+      if (trailer) {
+        window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank");
+      } else {
+        toast.error(t("home.trailerNotFound"));
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(t("home.trailerError"));
+    }
+  }
+
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 4,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+    ],
+  };
   useEffect(() => {
     async function loadMovies() {
       try {
@@ -39,36 +92,11 @@ console.log("loading state",loading);
 
     loadMovies();
   }, []);
-
-  async function doSearch(e?: React.FormEvent) {
-    e?.preventDefault();
+  useEffect(() => {
     if (!query.trim()) {
       setSearch(null);
-      return;
     }
-
-    try {
-      const res = await tmdb.searchMovies(query);
-      setSearch(res.data.results);
-    } catch (err) {
-      console.error(err);
-      toast.error(t("home.searchFailed"));
-    }
-  }
-
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 4,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-    ],
-  };
-
+  }, [query]);
   const featured = popular[0];
 
   return (
@@ -89,7 +117,10 @@ console.log("loading state",loading);
             <p className="max-w-2xl text-gray-300 text-sm md:text-base mb-6 line-clamp-3">
               {featured.overview}
             </p>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold transition">
+            <button
+              onClick={() => watchTrailer(featured.id)}
+              className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold transition"
+            >
               {t("home.watchTrailer")}
             </button>
           </div>
@@ -108,7 +139,7 @@ console.log("loading state",loading);
             placeholder={t("home.searchMovies")}
             className="grow bg-transparent outline-none text-white px-4 py-2 placeholder-gray-400"
           />
-          <button className="px-6 bg-red-600 hover:bg-red-700 text-sm rounded-full transition">
+          <button className="cursor-pointer px-6 bg-red-600 hover:bg-red-700 text-sm rounded-full transition">
             {t("home.search")}
           </button>
         </form>
@@ -118,7 +149,9 @@ console.log("loading state",loading);
       <div className="max-w-6xl mx-auto px-4 space-y-12">
         {search ? (
           <section>
-            <h3 className="text-xl font-semibold mb-4">{t("home.searchResults")}</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {t("home.searchResults")}
+            </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {search.map((m) => (
                 <MovieCard key={m.id} movie={m} />
@@ -127,17 +160,32 @@ console.log("loading state",loading);
           </section>
         ) : (
           <>
-            <MovieSlider title={t("home.popular")} movies={popular} settings={sliderSettings} />
-            <MovieSlider title={t("home.nowPlaying")} movies={now} settings={sliderSettings} />
-            <MovieSlider title={t("home.upcoming")} movies={upcoming} settings={sliderSettings} />
-            <MovieSlider title={t("home.topRated")} movies={top} settings={sliderSettings} />
+            <MovieSlider
+              title={t("home.popular")}
+              movies={popular}
+              settings={sliderSettings}
+            />
+            <MovieSlider
+              title={t("home.nowPlaying")}
+              movies={now}
+              settings={sliderSettings}
+            />
+            <MovieSlider
+              title={t("home.upcoming")}
+              movies={upcoming}
+              settings={sliderSettings}
+            />
+            <MovieSlider
+              title={t("home.topRated")}
+              movies={top}
+              settings={sliderSettings}
+            />
           </>
         )}
       </div>
     </div>
   );
 }
-
 /* --- Slider Wrapper Component --- */
 function MovieSlider({ title, movies, settings }: any) {
   return (
