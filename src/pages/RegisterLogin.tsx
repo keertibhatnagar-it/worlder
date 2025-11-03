@@ -11,7 +11,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
-  OAuthProvider,
+  // OAuthProvider,
 } from "firebase/auth";
 import { writeUsers } from "../lib/auth";
 
