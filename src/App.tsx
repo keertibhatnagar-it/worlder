@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 import Header from './components/Header'
 import RegisterLogin from './pages/RegisterLogin'
 import Home from './pages/Home'
@@ -9,6 +11,14 @@ import PrivateRoute from './components/PrivateRoute'
 import './App.css'
 
 export default function App() {
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    // Set document direction based on language
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.lang = i18n.language
+  }, [i18n.language])
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />

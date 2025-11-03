@@ -1,0 +1,70 @@
+{
+  "landing": {
+    "title": "Discover, Watch & Collect",
+    "titleHighlight": "Your Favourite Movies",
+    "subtitle": "Explore trending, top-rated, and upcoming movies from around the world. Create your personal watchlist and never miss a cinematic moment again.",
+    "getStarted": "Get Started"
+  },
+  "header": {
+    "explore": "Explore",
+    "favorites": "Favourites",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "hi": "Hi"
+  },
+  "auth": {
+    "createAccount": "Create your account",
+    "welcomeBack": "Welcome back",
+    "continueWith": "Continue with your favorite platform or sign in using your email.",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithFacebook": "Continue with Facebook",
+    "continueWithApple": "Continue with Apple",
+    "useEmailInstead": "Use email instead",
+    "register": "Register",
+    "login": "Login",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "createAccountBtn": "Create account",
+    "signInBtn": "Sign in",
+    "fillAllFields": "Please fill all fields",
+    "emailAlreadyRegistered": "Email already registered",
+    "weakPassword": "Password is too weak",
+    "userNotFound": "User not found",
+    "wrongPassword": "Incorrect password",
+    "socialLoginFailed": "Social login failed",
+    "appleLoginNotAvailable": "Apple login requires an Apple Developer account.\nThis button is a demo placeholder for now."
+  },
+  "home": {
+    "watchTrailer": "Watch Trailer",
+    "searchMovies": "Search movies...",
+    "search": "Search",
+    "searchResults": "Search Results",
+    "popular": "Popular",
+    "nowPlaying": "Now Playing",
+    "upcoming": "Upcoming",
+    "topRated": "Top Rated",
+    "failedToFetch": "Failed to fetch movie data. Please try again later.",
+    "searchFailed": "Search failed. Please check your connection."
+  },
+  "movieDetail": {
+    "loading": "Loading movie details...",
+    "addToFavorites": "Add to Favourites",
+    "removeFromFavorites": "Remove from Favourites",
+    "cast": "Cast",
+    "watchTrailer": "Watch Trailer",
+    "as": "as",
+    "min": "min"
+  },
+  "favorites": {
+    "myFavorites": "My Favourites",
+    "movie": "movie",
+    "movies": "movies",
+    "noFavoritesYet": "No favourites yet — start adding your top picks!",
+    "removeFromFavorites": "Remove from favourites"
+  },
+  "common": {
+    "language": "Language"
+  }
+}
+

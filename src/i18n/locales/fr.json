@@ -1,0 +1,70 @@
+{
+  "landing": {
+    "title": "Découvrez, Regardez et Collectionnez",
+    "titleHighlight": "Vos Films Favoris",
+    "subtitle": "Explorez les films tendances, les mieux notés et à venir du monde entier. Créez votre liste de lecture personnelle et ne manquez plus jamais un moment cinématographique.",
+    "getStarted": "Commencer"
+  },
+  "header": {
+    "explore": "Explorer",
+    "favorites": "Favoris",
+    "signIn": "Se Connecter",
+    "signOut": "Se Déconnecter",
+    "hi": "Salut"
+  },
+  "auth": {
+    "createAccount": "Créez votre compte",
+    "welcomeBack": "Bon retour",
+    "continueWith": "Continuez avec votre plateforme préférée ou connectez-vous avec votre e-mail.",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithFacebook": "Continuer avec Facebook",
+    "continueWithApple": "Continuer avec Apple",
+    "useEmailInstead": "Utiliser l'e-mail à la place",
+    "register": "S'inscrire",
+    "login": "Se Connecter",
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "createAccountBtn": "Créer un compte",
+    "signInBtn": "Se connecter",
+    "fillAllFields": "Veuillez remplir tous les champs",
+    "emailAlreadyRegistered": "L'e-mail est déjà enregistré",
+    "weakPassword": "Le mot de passe est trop faible",
+    "userNotFound": "Utilisateur non trouvé",
+    "wrongPassword": "Mot de passe incorrect",
+    "socialLoginFailed": "Échec de la connexion sociale",
+    "appleLoginNotAvailable": "La connexion Apple nécessite un compte Apple Developer.\nCe bouton est un espace réservé de démonstration pour l'instant."
+  },
+  "home": {
+    "watchTrailer": "Regarder la Bande-annonce",
+    "searchMovies": "Rechercher des films...",
+    "search": "Rechercher",
+    "searchResults": "Résultats de Recherche",
+    "popular": "Populaire",
+    "nowPlaying": "À l'Affiche",
+    "upcoming": "À Venir",
+    "topRated": "Mieux Notés",
+    "failedToFetch": "Échec de la récupération des données de films. Veuillez réessayer plus tard.",
+    "searchFailed": "La recherche a échoué. Veuillez vérifier votre connexion."
+  },
+  "movieDetail": {
+    "loading": "Chargement des détails du film...",
+    "addToFavorites": "Ajouter aux Favoris",
+    "removeFromFavorites": "Retirer des Favoris",
+    "cast": "Distribution",
+    "watchTrailer": "Regarder la Bande-annonce",
+    "as": "en tant que",
+    "min": "min"
+  },
+  "favorites": {
+    "myFavorites": "Mes Favoris",
+    "movie": "film",
+    "movies": "films",
+    "noFavoritesYet": "Pas encore de favoris — commencez à ajouter vos meilleurs choix !",
+    "removeFromFavorites": "Retirer des favoris"
+  },
+  "common": {
+    "language": "Langue"
+  }
+}
+

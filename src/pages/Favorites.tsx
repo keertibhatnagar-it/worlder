@@ -4,8 +4,10 @@ import MovieCard from '../components/MovieCard'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaHeart } from 'react-icons/fa'
 import { IoMdCloseCircle } from 'react-icons/io'
+import { useTranslation } from 'react-i18next'
 
 export default function Favorites() {
+  const { t } = useTranslation();
   const [ids, setIds] = useState<number[]>(() => {
     try {
       return JSON.parse(localStorage.getItem('worlder_favs') || '[]')
@@ -40,11 +42,11 @@ export default function Favorites() {
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-3xl md:text-4xl font-semibold text-white flex items-center gap-3">
             <FaHeart className="text-red-500 drop-shadow-md animate-pulse" />
-            <span className="text-gray-200 tracking-wide italic">My Favourites</span>
+            <span className="text-gray-200 tracking-wide italic">{t("favorites.myFavorites")}</span>
           </h2>
           {movies.length > 0 && (
             <p className="text-gray-400 text-sm">
-              {movies.length} {movies.length === 1 ? 'movie' : 'movies'}
+              {movies.length} {movies.length === 1 ? t("favorites.movie") : t("favorites.movies")}
             </p>
           )}
         </div>
@@ -54,7 +56,7 @@ export default function Favorites() {
           <div className="flex flex-col items-center justify-center py-32 text-gray-400">
             <FaHeart className="text-7xl text-gray-600 mb-6 animate-pulse" />
             <p className="text-lg md:text-xl font-light">
-              No favourites yet — start adding your top picks!
+              {t("favorites.noFavoritesYet")}
             </p>
           </div>
         ) : (
@@ -83,7 +85,7 @@ export default function Favorites() {
                   <button
                     onClick={() => remove(m.id)}
                     className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm hover:bg-red-600 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition duration-200"
-                    title="Remove from favourites"
+                    title={t("favorites.removeFromFavorites")}
                   >
                     <IoMdCloseCircle className="text-2xl" />
                   </button>

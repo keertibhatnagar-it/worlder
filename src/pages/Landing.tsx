@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Landing() {
   const nav = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="relative min-h-screen text-white overflow-hidden bg-linear-to-b from-gray-900 via-black to-gray-950">
@@ -24,9 +26,9 @@ export default function Landing() {
           transition={{ duration: 1 }}
           className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
         >
-          Discover, Watch & Collect
+          {t("landing.title")}
           <br />
-          <span className="text-red-500">Your Favourite Movies</span>
+          <span className="text-red-500">{t("landing.titleHighlight")}</span>
         </motion.h1>
 
         <motion.p
@@ -35,8 +37,7 @@ export default function Landing() {
           transition={{ delay: 0.3, duration: 1 }}
           className="mt-6 max-w-2xl text-lg text-gray-300"
         >
-          Explore trending, top-rated, and upcoming movies from around the world.
-          Create your personal watchlist and never miss a cinematic moment again.
+          {t("landing.subtitle")}
         </motion.p>
 
         <motion.div
@@ -49,7 +50,7 @@ export default function Landing() {
             onClick={() => nav("/auth")}
             className="cursor-pointer px-16 py-3 bg-red-600 hover:bg-red-700 rounded-full font-semibold shadow-lg transition"
           >
-            Get Started
+            {t("landing.getStarted")}
           </button>
         </motion.div>
       </div>

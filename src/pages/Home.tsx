@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { tmdb } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+
 export default function Home() {
+  const { t } = useTranslation();
  const [popular, setPopular] = useState<any[]>([]);
   const [now, setNow] = useState<any[]>([]);
   const [upcoming, setUpcoming] = useState<any[]>([]);
@@ -28,7 +31,7 @@ console.log("loading state",loading);
         setTop(t.data.results.slice(0, 10));
       } catch (err) {
         console.error(err);
-        toast.error("Failed to fetch movie data. Please try again later.");
+        toast.error(t("home.failedToFetch"));
       } finally {
         setLoading(false);
       }
@@ -49,7 +52,7 @@ console.log("loading state",loading);
       setSearch(res.data.results);
     } catch (err) {
       console.error(err);
-      toast.error("Search failed. Please check your connection.");
+      toast.error(t("home.searchFailed"));
     }
   }
 
@@ -70,7 +73,7 @@ console.log("loading state",loading);
 
   return (
     <div className="min-h-screen pt-16 bg-gray-950 text-white pb-20">
-      {/* 🎬 Hero Banner */}
+      {/* Hero Banner */}
       {featured && (
         <div
           className="relative h-[70vh] flex flex-col justify-end bg-cover bg-center"
@@ -87,13 +90,13 @@ console.log("loading state",loading);
               {featured.overview}
             </p>
             <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold transition">
-              Watch Trailer
+              {t("home.watchTrailer")}
             </button>
           </div>
         </div>
       )}
 
-      {/* 🔍 Search Bar */}
+      {/*  Search Bar */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <form
           onSubmit={doSearch}
@@ -102,20 +105,20 @@ console.log("loading state",loading);
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search movies..."
+            placeholder={t("home.searchMovies")}
             className="grow bg-transparent outline-none text-white px-4 py-2 placeholder-gray-400"
           />
           <button className="px-6 bg-red-600 hover:bg-red-700 text-sm rounded-full transition">
-            Search
+            {t("home.search")}
           </button>
         </form>
       </div>
 
-      {/* 🎞️ Movie Sections */}
+      {/*  Movie Sections */}
       <div className="max-w-6xl mx-auto px-4 space-y-12">
         {search ? (
           <section>
-            <h3 className="text-xl font-semibold mb-4">Search Results</h3>
+            <h3 className="text-xl font-semibold mb-4">{t("home.searchResults")}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {search.map((m) => (
                 <MovieCard key={m.id} movie={m} />
@@ -124,10 +127,10 @@ console.log("loading state",loading);
           </section>
         ) : (
           <>
-            <MovieSlider title="Popular" movies={popular} settings={sliderSettings} />
-            <MovieSlider title="Now Playing" movies={now} settings={sliderSettings} />
-            <MovieSlider title="Upcoming" movies={upcoming} settings={sliderSettings} />
-            <MovieSlider title="Top Rated" movies={top} settings={sliderSettings} />
+            <MovieSlider title={t("home.popular")} movies={popular} settings={sliderSettings} />
+            <MovieSlider title={t("home.nowPlaying")} movies={now} settings={sliderSettings} />
+            <MovieSlider title={t("home.upcoming")} movies={upcoming} settings={sliderSettings} />
+            <MovieSlider title={t("home.topRated")} movies={top} settings={sliderSettings} />
           </>
         )}
       </div>

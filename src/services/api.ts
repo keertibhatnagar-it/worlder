@@ -7,7 +7,7 @@ export const api = axios.create({
   params: { api_key: API_KEY },
 });
 
-// 🔁 Request Interceptor
+//  Request Interceptor
 api.interceptors.request.use(
   (config) => {
     // Example: attach common params or headers
@@ -17,7 +17,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ⚠️ Response Interceptor
+//  Response Interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {
