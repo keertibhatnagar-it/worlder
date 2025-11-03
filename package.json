@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist-electron/main.js",
+  "main": "dist-electron/main.cjs",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc -p electron/tsconfig.json",
-    "start": "npm run build && electron ."
+    "build": "vite build && tsc -p electron/tsconfig.json && mv dist-electron/main.js dist-electron/main.cjs",
+    "start": "npm run build && electron dist-electron/main.cjs"
   },
+
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.1",
