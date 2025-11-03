@@ -10,7 +10,7 @@ return (
 <img src={tmdb.image(movie.poster_path, 'w342')} alt={movie.title} className="w-full h-56 object-cover" />
 </Link>
 <div className="p-3">
-<h3 className="text-sm font-semibold truncate">{movie.title}</h3>
+<h3 className="text-sm font-semibold truncate text-gray-700">{movie.title}</h3>
 <div className="text-xs text-gray-500">{new Date(movie.release_date || '').getFullYear() || '—'} • {movie.vote_average}</div>
 </div>
 </div>
