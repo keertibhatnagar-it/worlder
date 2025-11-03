@@ -73,7 +73,7 @@ console.log("loading state",loading);
 
   return (
     <div className="min-h-screen pt-16 bg-gray-950 text-white pb-20">
-      {/* 🎬 Hero Banner */}
+      {/* Hero Banner */}
       {featured && (
         <div
           className="relative h-[70vh] flex flex-col justify-end bg-cover bg-center"
@@ -96,7 +96,7 @@ console.log("loading state",loading);
         </div>
       )}
 
-      {/* 🔍 Search Bar */}
+      {/*  Search Bar */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <form
           onSubmit={doSearch}
@@ -114,7 +114,7 @@ console.log("loading state",loading);
         </form>
       </div>
 
-      {/* 🎞️ Movie Sections */}
+      {/*  Movie Sections */}
       <div className="max-w-6xl mx-auto px-4 space-y-12">
         {search ? (
           <section>
