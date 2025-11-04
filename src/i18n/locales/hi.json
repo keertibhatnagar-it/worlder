@@ -1,0 +1,69 @@
+{
+  "landing": {
+    "title": "खोजें, देखें और सहेजें",
+    "titleHighlight": "अपनी पसंदीदा फ़िल्में",
+    "subtitle": "दुनियाभर की ट्रेंडिंग, टॉप रेटेड और आने वाली फ़िल्मों को एक्सप्लोर करें। अपनी व्यक्तिगत वॉचलिस्ट बनाएं और कोई भी सिनेमैटिक पल मिस न करें।",
+    "getStarted": "शुरू करें"
+  },
+  "header": {
+    "explore": "एक्सप्लोर करें",
+    "favorites": "पसंदीदा",
+    "signIn": "साइन इन",
+    "signOut": "साइन आउट",
+    "hi": "नमस्ते"
+  },
+  "auth": {
+    "createAccount": "अपना अकाउंट बनाएं",
+    "welcomeBack": "वापसी पर स्वागत है",
+    "continueWith": "अपने पसंदीदा प्लेटफ़ॉर्म से जारी रखें या ईमेल से साइन इन करें।",
+    "continueWithGoogle": "Google से जारी रखें",
+    "continueWithFacebook": "Facebook से जारी रखें",
+    "continueWithApple": "Apple से जारी रखें",
+    "useEmailInstead": "ईमेल का उपयोग करें",
+    "register": "रजिस्टर करें",
+    "login": "लॉग इन करें",
+    "fullName": "पूरा नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "createAccountBtn": "अकाउंट बनाएं",
+    "signInBtn": "साइन इन करें",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें",
+    "emailAlreadyRegistered": "यह ईमेल पहले से रजिस्टर्ड है",
+    "weakPassword": "पासवर्ड बहुत कमजोर है",
+    "userNotFound": "यूज़र नहीं मिला",
+    "wrongPassword": "गलत पासवर्ड",
+    "socialLoginFailed": "सोशल लॉगिन विफल रहा",
+    "appleLoginNotAvailable": "Apple लॉगिन के लिए Apple Developer अकाउंट आवश्यक है।\nयह बटन फिलहाल डेमो प्लेसहोल्डर है।"
+  },
+  "home": {
+    "watchTrailer": "ट्रेलर देखें",
+    "searchMovies": "फ़िल्में खोजें...",
+    "search": "खोजें",
+    "searchResults": "खोज परिणाम",
+    "popular": "लोकप्रिय",
+    "nowPlaying": "अभी चल रही",
+    "upcoming": "आने वाली",
+    "topRated": "सर्वश्रेष्ठ रेटेड",
+    "failedToFetch": "फ़िल्म डेटा प्राप्त करने में विफल। कृपया बाद में पुनः प्रयास करें।",
+    "searchFailed": "खोज विफल। कृपया अपना कनेक्शन जांचें।"
+  },
+  "movieDetail": {
+    "loading": "फ़िल्म विवरण लोड हो रहा है...",
+    "addToFavorites": "पसंदीदा में जोड़ें",
+    "removeFromFavorites": "पसंदीदा से हटाएं",
+    "cast": "कलाकार",
+    "watchTrailer": "ट्रेलर देखें",
+    "as": "के रूप में",
+    "min": "मिनट"
+  },
+  "favorites": {
+    "myFavorites": "मेरे पसंदीदा",
+    "movie": "फ़िल्म",
+    "movies": "फ़िल्में",
+    "noFavoritesYet": "अभी तक कोई पसंदीदा नहीं — अपनी पसंद जोड़ना शुरू करें!",
+    "removeFromFavorites": "पसंदीदा से हटाएं"
+  },
+  "common": {
+    "language": "भाषा"
+  }
+}

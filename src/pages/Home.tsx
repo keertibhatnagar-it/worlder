@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import { tmdb } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
@@ -60,17 +60,18 @@ export default function Home() {
     dots: false,
     infinite: false,
     speed: 500,
-    arrows: true, // Default slick arrows
-    slidesToShow: 5,
-    slidesToScroll: 2,
+    arrows: true,
+    slidesToShow: 5, //  default for large desktop
+    slidesToScroll: 1,
     swipeToSlide: true,
     responsive: [
-      { breakpoint: 1280, settings: { slidesToShow: 4 } },
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1.3 } },
+      { breakpoint: 1536, settings: { slidesToShow: 4 } }, // below 1536px
+      { breakpoint: 1280, settings: { slidesToShow: 3 } }, // below 1280px
+      { breakpoint: 1024, settings: { slidesToShow: 2 } }, // below 1024px
+      { breakpoint: 640, settings: { slidesToShow: 1.3 } }, // below 640px (mobile)
     ],
   };
+
   useEffect(() => {
     async function loadMovies() {
       try {
@@ -191,10 +192,18 @@ export default function Home() {
 }
 /* --- Slider Wrapper Component --- */
 function MovieSlider({ title, movies, settings }: any) {
+  const sliderRef = useRef<Slider | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => sliderRef.current?.slickGoTo(0);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section>
       <h3 className="text-xl font-semibold mb-3 px-2">{title}</h3>
-      <Slider {...settings}>
+      <Slider ref={sliderRef} {...settings}>
         {movies.map((m: any) => (
           <div key={m.id} className="px-2">
             <MovieCard movie={m} />

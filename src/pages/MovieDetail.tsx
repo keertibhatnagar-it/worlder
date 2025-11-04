@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { tmdb } from "../services/tmdb";
 import { motion } from "framer-motion";
@@ -22,6 +22,8 @@ export default function MovieDetail() {
     if (!id) return;
     tmdb.getMovieDetails(Number(id)).then((r) => setMovie(r.data || r));
   }, [id]);
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
 
   function toggleFav() {
     if (!movie) return;
@@ -45,27 +47,9 @@ export default function MovieDetail() {
   const trailer = movie.videos?.results?.find(
     (v: any) => v.type === "Trailer" && v.site === "YouTube"
   );
-  const fallbackCastImg = "https://via.placeholder.com/185x278?text=No+Image";
-
-  // Default slick slider with responsive setup
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    arrows: true, // Default slick arrows
-    slidesToShow: 5,
-    slidesToScroll: 2,
-    swipeToSlide: true,
-    responsive: [
-      { breakpoint: 1280, settings: { slidesToShow: 4 } },
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1.3 } },
-    ],
-  };
 
   return (
-    <div className="relative min-h-screen text-white bg-gradient-to-b from-gray-950 via-black to-gray-900">
+    <div className="relative min-h-screen text-white bg-linear-to-b from-gray-950 via-black to-gray-900">
       {/* Background Poster */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 blur-sm"
@@ -76,7 +60,7 @@ export default function MovieDetail() {
           )})`,
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/70 to-transparent"></div>
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-10 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -143,38 +127,9 @@ export default function MovieDetail() {
           </p>
 
           {/* Cast Slider */}
-          <div className="px-4 sm:px-0">
-            <h3 className="text-xl sm:text-2xl font-semibold mb-3">
-              {t("movieDetail.cast")}
-            </h3>
-            <Slider {...settings}>
-              {cast.map((c: any) => {
-                const imgSrc = c.profile_path
-                  ? tmdb.image(c.profile_path, "w185")
-                  : fallbackCastImg;
-                return (
-                  <div key={c.cast_id || c.credit_id || c.id} className="px-2">
-                    <div className="text-center bg-gray-800/40 rounded-xl p-3 hover:bg-gray-700/40 transition">
-                      <img
-                        src={imgSrc}
-                        alt={c.name}
-                        onError={(e: any) =>
-                          (e.currentTarget.src = fallbackCastImg)
-                        }
-                        className="h-36 sm:h-40 w-full object-cover rounded-lg mb-2"
-                      />
-                      <div className="text-xs sm:text-sm font-medium truncate">
-                        {c.name}
-                      </div>
-                      <div className="text-[10px] sm:text-xs text-gray-400 truncate">
-                        {t("movieDetail.as")} {c.character}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
+          {cast.length > 0 && (
+            <CastSlider cast={cast} title={t("movieDetail.cast")} />
+          )}
 
           {/* Trailer */}
           {trailer && (
@@ -196,5 +151,75 @@ export default function MovieDetail() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export function CastSlider({ cast, title }: any) {
+  const { t } = useTranslation();
+  const sliderRef = useRef<Slider | null>(null);
+
+  const fallbackCastImg = "https://via.placeholder.com/185x278?text=No+Image";
+
+  // Reset slider position when resizing (prevents cutoff issues)
+  useEffect(() => {
+    const handleResize = () => sliderRef.current?.slickGoTo(0);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  // Default slick slider with responsive setup
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    arrows: true,
+    slidesToShow: 5, //  default for large desktop
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    responsive: [
+      { breakpoint: 1536, settings: { slidesToShow: 4 } }, // below 1536px
+      { breakpoint: 1280, settings: { slidesToShow: 3 } }, // below 1280px
+      { breakpoint: 1024, settings: { slidesToShow: 2 } }, // below 1024px
+      { breakpoint: 640, settings: { slidesToShow: 1.3 } }, // below 640px (mobile)
+    ],
+  };
+
+  return (
+    <section className="px-4 sm:px-0">
+      <h3 className="text-xl sm:text-2xl font-semibold mb-3">{title}</h3>
+      <div className="overflow-hidden -mx-2">
+        <Slider ref={sliderRef} {...settings}>
+          {" "}
+          {cast.map((c: any) => {
+            const imgSrc = c.profile_path
+              ? tmdb.image(c.profile_path, "w185")
+              : fallbackCastImg;
+            return (
+              <div key={c.cast_id || c.credit_id || c.id} className="px-2">
+                {" "}
+                <div className="text-center bg-gray-800/40 rounded-xl p-3 hover:bg-gray-700/40 transition">
+                  {" "}
+                  <img
+                    src={imgSrc}
+                    alt={c.name}
+                    onError={(e: any) =>
+                      (e.currentTarget.src = fallbackCastImg)
+                    }
+                    className="h-36 sm:h-40 w-full object-cover rounded-lg mb-2"
+                  />{" "}
+                  <div className="text-xs sm:text-sm font-medium truncate">
+                    {" "}
+                    {c.name}{" "}
+                  </div>{" "}
+                  <div className="text-[10px] sm:text-xs text-gray-400 truncate">
+                    {" "}
+                    {t("movieDetail.as")} {c.character}{" "}
+                  </div>{" "}
+                </div>{" "}
+              </div>
+            );
+          })}{" "}
+        </Slider>
+      </div>
+    </section>
   );
 }
