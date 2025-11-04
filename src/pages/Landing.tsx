@@ -7,7 +7,7 @@ export default function Landing() {
   const { t } = useTranslation();
 
   return (
-    <div className="relative min-h-screen text-white overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-950 dark:from-gray-900 dark:via-black dark:to-gray-950">
+    <div className="relative min-h-screen text-white overflow-hidden bg-linear-to-b from-gray-900 via-black to-gray-950 dark:from-gray-900 dark:via-black dark:to-gray-950">
       {/* Background Image / Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-40"

@@ -65,7 +65,7 @@ export default function MovieDetail() {
   };
 
   return (
-    <div className="relative min-h-screen text-white bg-gradient-to-b from-gray-950 via-black to-gray-900">
+    <div className="relative min-h-screen text-white bg-linear-to-b from-gray-950 via-black to-gray-900">
       {/* Background Poster */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30 blur-sm"
@@ -76,7 +76,7 @@ export default function MovieDetail() {
           )})`,
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/70 to-transparent"></div>
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-10 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
