@@ -22,8 +22,6 @@ export default function MovieDetail() {
     if (!id) return;
     tmdb.getMovieDetails(Number(id)).then((r) => setMovie(r.data || r));
   }, [id]);
-  const [ready, setReady] = useState(false);
-  useEffect(() => setReady(true), []);
 
   function toggleFav() {
     if (!movie) return;
