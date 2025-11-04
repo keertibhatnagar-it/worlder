@@ -9,22 +9,38 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Check localStorage first, then system preference
+// Initialize theme immediately (before React renders) to prevent flash
+function getInitialTheme(): Theme {
+  // Check localStorage first
+  if (typeof window !== 'undefined') {
     const savedTheme = localStorage.getItem('theme') as Theme | null
-    if (savedTheme) {
+    if (savedTheme === 'dark' || savedTheme === 'light') {
       return savedTheme
     }
     // Check system preference
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark'
     }
-    return 'light'
-  })
+  }
+  return 'light'
+}
+
+// Apply theme class immediately to prevent flash
+if (typeof window !== 'undefined') {
+  const initialTheme = getInitialTheme()
+  const root = document.documentElement
+  if (initialTheme === 'dark') {
+    root.classList.add('dark')
+  } else {
+    root.classList.remove('dark')
+  }
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
   useEffect(() => {
-    // Apply theme to document root
+    // Apply theme to document root (html element)
     const root = document.documentElement
     if (theme === 'dark') {
       root.classList.add('dark')

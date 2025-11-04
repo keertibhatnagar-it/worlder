@@ -1,4 +1,4 @@
 @import "tailwindcss";
 
-/* Dark mode is handled via the 'dark' class on the root element */
-/* The ThemeContext automatically adds/removes this class */
+/* Tailwind CSS v4 - Dark mode is handled via the 'dark' class on the html element */
+/* The dark: variant will work when the 'dark' class is present on the html element */
