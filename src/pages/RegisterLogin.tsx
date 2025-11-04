@@ -109,19 +109,19 @@ export default function RegisterLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-950 via-gray-900 to-black flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-black flex items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-4xl bg-gray-900/70 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
+        className="w-full max-w-4xl bg-white/90 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
       >
         {/* Left: Social login panel */}
-        <div className="p-8 md:p-10 bg-linear-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
-          <h2 className="text-3xl font-bold mb-6 text-white">
+        <div className="p-8 md:p-10 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-700/20 dark:to-purple-800/10 flex flex-col justify-center border-r border-gray-200 dark:border-gray-800">
+          <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
             {mode === "register" ? t("auth.createAccount") : t("auth.welcomeBack")}
           </h2>
-          <p className="text-gray-400 mb-8 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 mb-8 text-sm">
             {t("auth.continueWith")}
           </p>
 
@@ -150,15 +150,15 @@ export default function RegisterLogin() {
         </div>
 
         {/* Right: Email/password form */}
-        <div className="p-8 md:p-10 flex flex-col justify-center text-gray-100">
+        <div className="p-8 md:p-10 flex flex-col justify-center text-gray-900 dark:text-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <div className="text-sm text-gray-400">{t("auth.useEmailInstead")}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t("auth.useEmailInstead")}</div>
             <div>
               <button
                 className={`px-3 py-1 rounded-md transition ${
                   mode === "register"
                     ? "bg-blue-600 text-white"
-                    : "text-gray-400 hover:text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                 }`}
                 onClick={() => setMode("register")}
               >
@@ -168,7 +168,7 @@ export default function RegisterLogin() {
                 className={`px-3 py-1 rounded-md transition ${
                   mode === "login"
                     ? "bg-blue-600 text-white"
-                    : "text-gray-400 hover:text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                 }`}
                 onClick={() => setMode("login")}
               >
@@ -186,7 +186,7 @@ export default function RegisterLogin() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t("auth.fullName")}
-                className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-md px-4 py-2 border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
               />
             )}
             <input
@@ -194,14 +194,14 @@ export default function RegisterLogin() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t("auth.email")}
               type="email"
-              className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-md px-4 py-2 border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={t("auth.password")}
-              className="bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-md px-4 py-2 border border-gray-300 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none"
             />
 
             {err && <div className="text-sm text-red-500">{err}</div>}

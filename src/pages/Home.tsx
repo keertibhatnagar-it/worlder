@@ -103,7 +103,7 @@ export default function Home() {
   const featured = popular[0];
 
   return (
-    <div className="min-h-screen pt-16 bg-gray-950 text-white pb-20">
+    <div className="min-h-screen pt-16 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white pb-20">
       {/* Hero Banner */}
       {featured && (
         <div
@@ -117,7 +117,7 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 max-w-2xl">
               {featured.title}
             </h1>
-            <p className="max-w-2xl text-gray-300 text-sm md:text-base mb-6 line-clamp-3">
+            <p className="max-w-2xl text-gray-200 dark:text-gray-300 text-sm md:text-base mb-6 line-clamp-3">
               {featured.overview}
             </p>
             <button
@@ -134,13 +134,13 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <form
           onSubmit={doSearch}
-          className="flex gap-2 bg-gray-800 p-2 rounded-full overflow-hidden"
+          className="flex gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700"
         >
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("home.searchMovies")}
-            className="grow bg-transparent outline-none text-white px-4 py-2 placeholder-gray-400"
+            className="grow bg-transparent outline-none text-gray-900 dark:text-white px-4 py-2 placeholder-gray-500 dark:placeholder-gray-400"
           />
           <button className="cursor-pointer px-6 bg-red-600 hover:bg-red-700 text-sm rounded-full transition">
             {t("home.search")}
@@ -152,7 +152,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-4 space-y-12">
         {search ? (
           <section>
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               {t("home.searchResults")}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
@@ -193,7 +193,7 @@ export default function Home() {
 function MovieSlider({ title, movies, settings }: any) {
   return (
     <section>
-      <h3 className="text-xl font-semibold mb-3 px-2">{title}</h3>
+      <h3 className="text-xl font-semibold mb-3 px-2 text-gray-900 dark:text-white">{title}</h3>
       <Slider {...settings}>
         {movies.map((m: any) => (
           <div key={m.id} className="px-2">

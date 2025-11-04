@@ -35,7 +35,7 @@ export default function MovieDetail() {
 
   if (!movie)
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-400">
+      <div className="min-h-screen flex items-center justify-center text-gray-600 dark:text-gray-400">
         {t("movieDetail.loading")}
       </div>
     );
@@ -98,7 +98,7 @@ export default function MovieDetail() {
             className={`w-full py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2 ${
               favIds.includes(movie.id)
                 ? "bg-red-600 hover:bg-red-700"
-                : "bg-gray-800 hover:bg-gray-700"
+                : "bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
             }`}
           >
             {favIds.includes(movie.id) ? (
@@ -154,7 +154,7 @@ export default function MovieDetail() {
                   : fallbackCastImg;
                 return (
                   <div key={c.cast_id || c.credit_id || c.id} className="px-2">
-                    <div className="text-center bg-gray-800/40 rounded-xl p-3 hover:bg-gray-700/40 transition">
+                    <div className="text-center bg-gray-100/80 dark:bg-gray-800/40 rounded-xl p-3 hover:bg-gray-200/80 dark:hover:bg-gray-700/40 transition">
                       <img
                         src={imgSrc}
                         alt={c.name}
@@ -166,7 +166,7 @@ export default function MovieDetail() {
                       <div className="text-xs sm:text-sm font-medium truncate">
                         {c.name}
                       </div>
-                      <div className="text-[10px] sm:text-xs text-gray-400 truncate">
+                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 truncate">
                         {t("movieDetail.as")} {c.character}
                       </div>
                     </div>

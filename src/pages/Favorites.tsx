@@ -39,18 +39,18 @@ export default function Favorites() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-950 via-gray-900 to-black text-gray-100 py-16 px-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-gray-200 dark:from-gray-950 dark:via-gray-900 dark:to-black text-gray-900 dark:text-gray-100 py-16 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl md:text-4xl font-semibold text-white flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white flex items-center gap-3">
             <FaHeart className="text-red-500 drop-shadow-md animate-pulse" />
-            <span className="text-gray-200 tracking-wide italic">
+            <span className="text-gray-800 dark:text-gray-200 tracking-wide italic">
               {t("favorites.myFavorites")}
             </span>
           </h2>
           {movies.length > 0 && (
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
               {movies.length}{" "}
               {movies.length === 1
                 ? t("favorites.movie")
@@ -61,8 +61,8 @@ export default function Favorites() {
 
         {/* Empty State */}
         {movies.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-32 text-gray-400">
-            <FaHeart className="text-7xl text-gray-600 mb-6 animate-pulse" />
+          <div className="flex flex-col items-center justify-center py-32 text-gray-600 dark:text-gray-400">
+            <FaHeart className="text-7xl text-gray-400 dark:text-gray-600 mb-6 animate-pulse" />
             <p className="text-lg md:text-xl font-light">
               {t("favorites.noFavoritesYet")}
             </p>

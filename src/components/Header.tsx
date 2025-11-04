@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { readSession, clearSession } from "../lib/auth";
-import { FaFilm, FaStar, FaCompass, FaBars, FaTimes } from "react-icons/fa";
+import { FaFilm, FaStar, FaCompass, FaBars, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Header() {
   const user: any = readSession();
   const nav = useNavigate();
   const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const changeLanguage = (lng: string) => i18n.changeLanguage(lng);
@@ -20,12 +22,12 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-black/60 border-b border-gray-800">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/90 dark:bg-black/60 border-b border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 text-white text-2xl font-extrabold tracking-tight"
+          className="flex items-center gap-2 text-gray-900 dark:text-white text-2xl font-extrabold tracking-tight"
         >
           <FaFilm className="text-red-500 w-6 h-6" />
           <span>Worlder</span>
@@ -35,13 +37,13 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           <Link
             to="/explore"
-            className="text-gray-300 hover:text-white flex items-center gap-1 transition"
+            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 transition"
           >
             <FaCompass className="w-4 h-4" /> {t("header.explore")}
           </Link>
           <Link
             to="/favorites"
-            className="text-gray-300 hover:text-white flex items-center gap-1 transition"
+            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 transition"
           >
             <FaStar className="w-4 h-4" /> {t("header.favorites")}
           </Link>
@@ -49,10 +51,21 @@ export default function Header() {
 
         {/* Desktop Auth + Language */}
         <div className="hidden md:flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <FaSun className="w-5 h-5" />
+            ) : (
+              <FaMoon className="w-5 h-5" />
+            )}
+          </button>
           <select
             value={i18n.language}
             onChange={(e) => changeLanguage(e.target.value)}
-            className="bg-gray-800 text-white text-sm px-3 py-1.5 rounded-md border border-gray-700 cursor-pointer focus:border-red-500 transition"
+            className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-sm px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-700 cursor-pointer focus:border-red-500 transition"
           >
             {languages.map((lang) => (
               <option key={lang.code} value={lang.code}>
@@ -63,7 +76,7 @@ export default function Header() {
 
           {user ? (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-300">
+              <span className="text-sm text-gray-700 dark:text-gray-300">
                 {t("header.hi")}, {user[0].name || "User"}
               </span>
               <button
@@ -88,7 +101,7 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white text-2xl"
+          className="md:hidden text-gray-900 dark:text-white text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
@@ -97,7 +110,7 @@ export default function Header() {
 
       {/* ✅ Mobile Dropdown (smooth animation without Framer Motion) */}
       <div
-        className={`md:hidden bg-black/90 border-t border-gray-800 overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`md:hidden bg-white/95 dark:bg-black/90 border-t border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-300 ease-in-out ${
           menuOpen
             ? "max-h-[400px] opacity-100 translate-y-0"
             : "max-h-0 opacity-0 -translate-y-2"
@@ -107,22 +120,34 @@ export default function Header() {
           <Link
             to="/explore"
             onClick={() => setMenuOpen(false)}
-            className="text-gray-300 hover:text-white flex items-center gap-1"
+            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center gap-1"
           >
             <FaCompass /> {t("header.explore")}
           </Link>
           <Link
             to="/favorites"
             onClick={() => setMenuOpen(false)}
-            className="text-gray-300 hover:text-white flex items-center gap-1"
+            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center gap-1"
           >
             <FaStar /> {t("header.favorites")}
           </Link>
 
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <FaSun className="w-5 h-5" />
+            ) : (
+              <FaMoon className="w-5 h-5" />
+            )}
+          </button>
+
           <select
             value={i18n.language}
             onChange={(e) => changeLanguage(e.target.value)}
-            className="bg-gray-800 text-white text-sm px-3 py-1.5 rounded-md border border-gray-700 cursor-pointer focus:border-red-500 transition"
+            className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-sm px-3 py-1.5 rounded-md border border-gray-300 dark:border-gray-700 cursor-pointer focus:border-red-500 transition"
           >
             {languages.map((lang) => (
               <option key={lang.code} value={lang.code}>

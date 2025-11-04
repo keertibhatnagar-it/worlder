@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+/* Dark mode is handled via the 'dark' class on the root element */
+/* The ThemeContext automatically adds/removes this class */
