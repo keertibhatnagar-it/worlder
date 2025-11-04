@@ -20,6 +20,7 @@ export default function Header() {
 
   const userMenuRef = useRef<HTMLDivElement | null>(null);
   const langMenuRef = useRef<HTMLDivElement | null>(null);
+  const WorldFav = JSON.parse(localStorage.getItem("worlder_favs") || "[]");
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -129,8 +130,13 @@ export default function Header() {
           </Link>
 
           {/* Favorites (Heart Icon) */}
-          <Link to="/favorites" className="hover:text-red-500">
-            <FaHeart />
+          <Link to="/favorites" className="relative hover:text-red-500">
+            <FaHeart className="text-xl" />
+            {WorldFav.length && user ? (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
+                {WorldFav.length}
+              </span>
+            ) : null}
           </Link>
 
           {/* Language (Globe Icon) */}

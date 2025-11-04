@@ -13,7 +13,7 @@ import {
   FacebookAuthProvider,
   // OAuthProvider,
 } from "firebase/auth";
-import { writeUsers } from "../lib/auth";
+import { writeUsers, type providerTypeProps, type User } from "../lib/auth";
 import { useTranslation } from "react-i18next";
 
 export default function RegisterLogin() {
@@ -26,7 +26,7 @@ export default function RegisterLogin() {
   const [err, setErr] = useState<string | null>(null);
 
   // -------- Social Login --------
-  async function socialLogin(providerType: "google" | "facebook" | "apple") {
+  async function socialLogin(providerType: providerTypeProps) {
     try {
       let provider;
       if (providerType === "google") provider = new GoogleAuthProvider();
@@ -76,6 +76,20 @@ export default function RegisterLogin() {
         password
       );
       await updateProfile(userCredential.user, { displayName: name });
+
+      const user = userCredential.user;
+      const userData: User[] = [
+        {
+          id: user.uid || "",
+          name: user.displayName || name,
+          email: user.email || "",
+          photoURL: user.photoURL || "",
+          provider: "email",
+        },
+      ];
+
+      writeUsers(userData);
+
       nav("/");
     } catch (error: any) {
       console.error(error);
@@ -97,7 +111,25 @@ export default function RegisterLogin() {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      const userData: User[] = [
+        {
+          id: user.uid || "",
+          name: user.displayName || "",
+          email: user.email || "",
+          photoURL: user.photoURL || "",
+          provider: "email",
+        },
+      ];
+
+      writeUsers(userData);
+
       nav("/");
     } catch (error: any) {
       console.error(error);
@@ -119,11 +151,11 @@ export default function RegisterLogin() {
         {/* Left: Social login panel */}
         <div className="p-8 md:p-10 bg-linear-to-br from-blue-700/20 to-purple-800/10 flex flex-col justify-center border-r border-gray-800">
           <h2 className="text-3xl font-bold mb-6 text-white">
-            {mode === "register" ? t("auth.createAccount") : t("auth.welcomeBack")}
+            {mode === "register"
+              ? t("auth.createAccount")
+              : t("auth.welcomeBack")}
           </h2>
-          <p className="text-gray-400 mb-8 text-sm">
-            {t("auth.continueWith")}
-          </p>
+          <p className="text-gray-400 mb-8 text-sm">{t("auth.continueWith")}</p>
 
           <div className="flex flex-col gap-3">
             <button
@@ -152,7 +184,9 @@ export default function RegisterLogin() {
         {/* Right: Email/password form */}
         <div className="p-8 md:p-10 flex flex-col justify-center text-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <div className="text-sm text-gray-400">{t("auth.useEmailInstead")}</div>
+            <div className="text-sm text-gray-400">
+              {t("auth.useEmailInstead")}
+            </div>
             <div>
               <button
                 className={`px-3 py-1 rounded-md transition ${
@@ -210,7 +244,9 @@ export default function RegisterLogin() {
               type="submit"
               className="bg-blue-600 cursor-pointer hover:bg-blue-700 transition text-white font-semibold py-2 rounded-md shadow-lg mt-2"
             >
-              {mode === "register" ? t("auth.createAccountBtn") : t("auth.signInBtn")}
+              {mode === "register"
+                ? t("auth.createAccountBtn")
+                : t("auth.signInBtn")}
             </button>
           </form>
         </div>

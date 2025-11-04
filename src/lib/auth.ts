@@ -1,8 +1,9 @@
+export type providerTypeProps = "google" | "facebook" | "apple" | "email";
 export type User = {
 id: string
 name: string
 email?: string
-provider: 'email' | 'google' | 'facebook' | 'apple'
+provider: providerTypeProps
 photoURL?:string
 passwordHash?: string 
 }
