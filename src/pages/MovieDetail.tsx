@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { tmdb } from "../services/tmdb";
 import { motion } from "framer-motion";
-import { FaStar, FaClock, FaHeart, FaRegHeart } from "react-icons/fa";
-import Slider from "react-slick";
+import { FaStar, FaClock, FaHeart, FaRegHeart, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { SwiperRef } from "swiper/react";
+import { Navigation } from "swiper/modules";
 import { useTranslation } from "react-i18next";
 
 export default function MovieDetail() {
@@ -154,69 +156,84 @@ export default function MovieDetail() {
 
 export function CastSlider({ cast, title }: any) {
   const { t } = useTranslation();
-  const sliderRef = useRef<Slider | null>(null);
-
+  const swiperRef = useRef<SwiperRef>(null);
   const fallbackCastImg = "https://via.placeholder.com/185x278?text=No+Image";
 
-  // Reset slider position when resizing (prevents cutoff issues)
-  useEffect(() => {
-    const handleResize = () => sliderRef.current?.slickGoTo(0);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  // Default slick slider with responsive setup
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    arrows: true,
-    slidesToShow: 5, //  default for large desktop
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    responsive: [
-      { breakpoint: 1536, settings: { slidesToShow: 4 } }, // below 1536px
-      { breakpoint: 1280, settings: { slidesToShow: 3 } }, // below 1280px
-      { breakpoint: 1024, settings: { slidesToShow: 2 } }, // below 1024px
-      { breakpoint: 640, settings: { slidesToShow: 1.3 } }, // below 640px (mobile)
-    ],
+  const swiperConfig = {
+    modules: [Navigation],
+    spaceBetween: 8,
+    slidesPerView: 1.3,
+    slidesPerGroup: 1,
+    navigation: false,
+    speed: 600,
+    freeMode: false,
+    grabCursor: true,
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 12,
+      },
+      1280: {
+        slidesPerView: 4,
+        spaceBetween: 14,
+      },
+      1536: {
+        slidesPerView: 5,
+        spaceBetween: 16,
+      },
+    },
   };
 
   return (
     <section className="px-4 sm:px-0">
-      <h3 className="text-xl sm:text-2xl font-semibold mb-3">{title}</h3>
-      <div className="overflow-hidden -mx-2">
-        <Slider ref={sliderRef} {...settings}>
-          {" "}
-          {cast.map((c: any) => {
-            const imgSrc = c.profile_path
-              ? tmdb.image(c.profile_path, "w185")
-              : fallbackCastImg;
-            return (
-              <div key={c.cast_id || c.credit_id || c.id} className="px-2">
-                {" "}
-                <div className="text-center bg-gray-800/40 rounded-xl p-3 hover:bg-gray-700/40 transition">
-                  {" "}
-                  <img
-                    src={imgSrc}
-                    alt={c.name}
-                    onError={(e: any) =>
-                      (e.currentTarget.src = fallbackCastImg)
-                    }
-                    className="h-36 sm:h-40 w-full object-cover rounded-lg mb-2"
-                  />{" "}
-                  <div className="text-xs sm:text-sm font-medium truncate">
-                    {" "}
-                    {c.name}{" "}
-                  </div>{" "}
-                  <div className="text-[10px] sm:text-xs text-gray-400 truncate">
-                    {" "}
-                    {t("movieDetail.as")} {c.character}{" "}
-                  </div>{" "}
-                </div>{" "}
+      <h3 className="text-xl sm:text-2xl font-semibold mb-4">{title}</h3>
+      <div className="relative group">
+        <Swiper ref={swiperRef} {...swiperConfig} className="!pb-4">
+        {cast.map((c: any) => {
+          const imgSrc = c.profile_path
+            ? tmdb.image(c.profile_path, "w185")
+            : fallbackCastImg;
+          return (
+            <SwiperSlide key={c.cast_id || c.credit_id || c.id}>
+              <div className="text-center bg-gray-800/40 rounded-xl w-full p-3 hover:bg-gray-700/40 transition h-full">
+                <img
+                  src={imgSrc}
+                  alt={c.name}
+                  onError={(e: any) =>
+                    (e.currentTarget.src = fallbackCastImg)
+                  }
+                  className="h-36 sm:h-40 w-full object-cover rounded-lg mb-2"
+                />
+                <div className="text-xs sm:text-sm font-medium truncate">
+                  {c.name}
+                </div>
+                <div className="text-[10px] sm:text-xs text-gray-400 truncate">
+                  {t("movieDetail.as")} {c.character}
+                </div>
               </div>
-            );
-          })}{" "}
-        </Slider>
+            </SwiperSlide>
+          );
+          })}
+        </Swiper>
+        {/* Custom Navigation Arrows */}
+        <button
+          onClick={() => swiperRef.current?.swiper.slidePrev()}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-red-600 text-white rounded-full p-2.5 transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm shadow-lg active:scale-95"
+          aria-label="Previous slide"
+        >
+          <FaChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
+        </button>
+        <button
+          onClick={() => swiperRef.current?.swiper.slideNext()}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-red-600 text-white rounded-full p-2.5 transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm shadow-lg active:scale-95"
+          aria-label="Next slide"
+        >
+          <FaChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
+        </button>
       </div>
     </section>
   );

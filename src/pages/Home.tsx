@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { SwiperRef } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { tmdb } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
 import toast from "react-hot-toast";
@@ -56,20 +59,33 @@ export default function Home() {
     }
   }
 
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    arrows: true,
-    slidesToShow: 5, //  default for large desktop
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    responsive: [
-      { breakpoint: 1536, settings: { slidesToShow: 4 } }, // below 1536px
-      { breakpoint: 1280, settings: { slidesToShow: 3 } }, // below 1280px
-      { breakpoint: 1024, settings: { slidesToShow: 2 } }, // below 1024px
-      { breakpoint: 640, settings: { slidesToShow: 1.3 } }, // below 640px (mobile)
-    ],
+  const swiperConfig = {
+    modules: [Navigation],
+    spaceBetween: 8,
+    slidesPerView: 1.3,
+    slidesPerGroup: 1,
+    navigation: false,
+    speed: 600,
+    freeMode: false,
+    grabCursor: true,
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 12,
+      },
+      1280: {
+        slidesPerView: 4,
+        spaceBetween: 14,
+      },
+      1536: {
+        slidesPerView: 5,
+        spaceBetween: 16,
+      },
+    },
   };
 
   useEffect(() => {
@@ -167,22 +183,22 @@ export default function Home() {
             <MovieSlider
               title={t("home.popular")}
               movies={popular}
-              settings={sliderSettings}
+              settings={swiperConfig}
             />
             <MovieSlider
               title={t("home.nowPlaying")}
               movies={now}
-              settings={sliderSettings}
+              settings={swiperConfig}
             />
             <MovieSlider
               title={t("home.upcoming")}
               movies={upcoming}
-              settings={sliderSettings}
+              settings={swiperConfig}
             />
             <MovieSlider
               title={t("home.topRated")}
               movies={top}
-              settings={sliderSettings}
+              settings={swiperConfig}
             />
           </div>
         )}
@@ -192,24 +208,35 @@ export default function Home() {
 }
 /* --- Slider Wrapper Component --- */
 function MovieSlider({ title, movies, settings }: any) {
-  const sliderRef = useRef<Slider | null>(null);
-
-  useEffect(() => {
-    const handleResize = () => sliderRef.current?.slickGoTo(0);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const swiperRef = useRef<SwiperRef>(null);
 
   return (
-    <section>
-      <h3 className="text-xl font-semibold mb-3 px-2">{title}</h3>
-      <Slider ref={sliderRef} {...settings}>
-        {movies.map((m: any) => (
-          <div key={m.id} className="px-2">
-            <MovieCard movie={m} />
-          </div>
-        ))}
-      </Slider>
+    <section className="mb-8">
+      <h3 className="text-xl font-semibold mb-4 px-2">{title}</h3>
+      <div className="relative group">
+        <Swiper ref={swiperRef} {...settings} className="!pb-4">
+          {movies.map((m: any) => (
+            <SwiperSlide key={m.id}>
+              <MovieCard movie={m} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* Custom Navigation Arrows */}
+        <button
+          onClick={() => swiperRef.current?.swiper.slidePrev()}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-red-600 text-white rounded-full p-2.5 transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm shadow-lg active:scale-95"
+          aria-label="Previous slide"
+        >
+          <FaChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
+        </button>
+        <button
+          onClick={() => swiperRef.current?.swiper.slideNext()}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-red-600 text-white rounded-full p-2.5 transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm shadow-lg active:scale-95"
+          aria-label="Next slide"
+        >
+          <FaChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
+        </button>
+      </div>
     </section>
   );
 }
